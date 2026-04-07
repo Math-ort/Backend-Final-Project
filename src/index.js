@@ -7,6 +7,8 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const multer = require('multer');
 const app = express();
+const authRoutes = require("./routes/authRoutes");
+const productRoutes = require("./routes/productApiRoutes");
 
 
 const productApiRoutes = require('./routes/productApiRoutes');
@@ -33,7 +35,7 @@ app.use(express.static('public'));
 
 dbConnection();
 
-
+app.use("/api/auth", authRoutes);
 app.use('/api/products', productApiRoutes);
 app.use((err, req, res, next) => {
   //  errores propios de multer
