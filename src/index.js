@@ -35,6 +35,18 @@ app.use(express.static('public'));
 
 dbConnection();
 
+app.get("/api/products", async (req, res) => {
+  const { categoria, subcategoria } = req.query;
+
+  const filter = {};
+
+  if (categoria) filter.categoria = categoria;
+  if (subcategoria) filter.subcategoria = subcategoria;
+
+  const products = await Product.find(filter);
+
+  res.json(products);
+});
 app.use("/api/auth", authRoutes);
 app.use('/api/products', productApiRoutes);
 app.use((err, req, res, next) => {
@@ -69,7 +81,7 @@ app.use((err, req, res, next) => {
   next();
 })
 
-app.listen(process.env.PORT || 4000,()=>{
+app.listen(process.env.Mongo_URI || 4000,()=>{
     console.log(`server listen in port http://localhost:${process.env.PORT || 4000}`)
 });
 

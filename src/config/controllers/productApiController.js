@@ -2,20 +2,28 @@ const Product = require('../../models/Products');
 const productApiController = {
 
  // GET /api/products
-getAllProducts: async (req, res) => {
+ getAllProducts: async (req, res) => {
   try {
-     const products = await Product.find();
+    const filter = {};
+    if (req.query.categoria) filter.categoria = req.query.categoria;
+    if (req.query.subcategoria) filter.subcategoria = req.query.subcategoria;
+
+    const products = await Product.find(filter);
     res.json({
       ok: true,
       total: products.length,
       data: products
     });
+    console.log("QUERY:", req.query);
+    console.log("FILTER:", filter);
   } catch (error) {
-     res.status(500).json({
-       ok: false,
-       message: "Error getting products"
-     });}
- },
+    res.status(500).json({
+      ok: false,
+      message: "Error getting products"
+    });
+  }
+},
+
   // GET /api/products/:id
   getProductById: async (req, res) => {
     try {
