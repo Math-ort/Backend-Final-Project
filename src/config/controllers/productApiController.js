@@ -1,4 +1,4 @@
-const Product = require('../../models/Products');
+const Product = require('../../models/Products')
 const productApiController = {
 
  // GET /api/products
@@ -9,13 +9,14 @@ const productApiController = {
     if (req.query.subcategoria) filter.subcategoria = req.query.subcategoria;
 
     const products = await Product.find(filter);
+
+   
     res.json({
       ok: true,
       total: products.length,
       data: products
     });
-    console.log("QUERY:", req.query);
-    console.log("FILTER:", filter);
+
   } catch (error) {
     res.status(500).json({
       ok: false,

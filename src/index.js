@@ -4,6 +4,7 @@ dotenv.config();// lectura variables entorno
 const helmet = require('helmet');
 const cors = require("cors");
 const methodOverride = require('method-override');
+const Product = require('./models/Products')
 const session = require('express-session');
 const multer = require('multer');
 const app = express();
@@ -35,18 +36,17 @@ app.use(express.static('public'));
 
 dbConnection();
 
-app.get("/api/products", async (req, res) => {
+/*app.get("/api/products", async (req, res) => {
   const { categoria, subcategoria } = req.query;
 
   const filter = {};
 
   if (categoria) filter.categoria = categoria;
   if (subcategoria) filter.subcategoria = subcategoria;
-
   const products = await Product.find(filter);
 
   res.json(products);
-});
+}); */
 app.use("/api/auth", authRoutes);
 app.use('/api/products', productApiRoutes);
 app.use((err, req, res, next) => {
